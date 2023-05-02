@@ -3,6 +3,7 @@ var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mySql = require('mysql');
 
 var indexRouter = require('./routes/index');
 var animalsRouter = require('./routes/animals');
@@ -45,3 +46,24 @@ app.use(function (err, req, res, next) {
 
 module.exports = app;
 
+/*
+   MySql db settup check
+*/
+
+let connection = mySql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD
+});
+
+connection.connect((err) => {
+  if (err) return console.error(err);
+
+  let query = `CREATE DATABASE adoptiondb if not exists`;
+  connection.query(query, (err, results, fields)=>{
+    if (err) return console.error(err);
+
+    console.log(results);
+  })
+  console.log('conneted to DB')
+});
