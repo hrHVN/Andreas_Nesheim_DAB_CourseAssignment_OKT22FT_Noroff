@@ -53,17 +53,34 @@ module.exports = app;
 let connection = mySql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD
+  password: process.env.DB_PASSWORD,
 });
 
 connection.connect((err) => {
   if (err) return console.error(err);
 
-  let query = `CREATE DATABASE adoptiondb if not exists`;
-  connection.query(query, (err, results, fields)=>{
-    if (err) return console.error(err);
-
-    console.log(results);
+  connection.query(`USE ${process.env.DB_DB}`, (err, results) => {
+    // Create DB if not existing
+    if (err && err.code == 'ER_BAD_DB_ERROR') {
+      connection.query(`CREATE DATABASE ${process.env.DB_DB}`, (err, results, fields) => {
+        if (err) {
+          return console.error(err);
+        }
+        return console.log('Databse re-created: ', results);
+      })
+    }
   })
-  console.log('conneted to DB')
+
+  console.log('conneted to DB: ', process.env.DB_DB)
 });
+
+
+// GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password';
+// GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY 'password';
+// CREATE USER 'developer'@'%' IDENTIFIED BY 'D3v3lope3r_ubuntu';
+// GRANT ALL ON *.* TO "developer"@"%";
+
+// CREATE DATABASE 'adoptiondb';
+// SELECT host, user FROM mysql.user;
+// show DATABASES;
+// ALTER USER 'developer'@'%' IDENTIFIED WITH mysql_native_password BY 'D3v3lope3r_ubuntu';
