@@ -62,16 +62,20 @@ connection.connect((err) => {
   connection.query(`USE ${process.env.DB_DB}`, (err, results) => {
     // Create DB if not existing
     if (err && err.code == 'ER_BAD_DB_ERROR') {
-      connection.query(`CREATE DATABASE ${process.env.DB_DB}`, (err, results, fields) => {
+      connection.query(`CREATE DATABASE ${process.env.DB_DB}`, (err, results) => {
         if (err) {
           return console.error(err);
         }
-        return console.log('Databse re-created: ', results);
+        console.log('Databse re-created: ', process.env.DB_DB);
       })
+      // create tables an relations
+      const DatabaseHandlers = require('./modules/dbScript');
+      connection.end();
+      return;
     }
+    console.log('conneted to DB: ', process.env.DB_DB);
+    connection.end();
   })
-
-  console.log('conneted to DB: ', process.env.DB_DB)
 });
 
 
