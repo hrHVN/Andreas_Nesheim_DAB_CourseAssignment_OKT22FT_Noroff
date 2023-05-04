@@ -1,17 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-    const Size = sequelize.define('size', {
+    const Temperament = sequelize.define('temperament', {
         id: {
-            type: Sequalize.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
         name: {
-            type: Sequalize.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         }
-    },
-        {
-            timeStamps: false
-        });
+    });
+    return Temperament;
 }

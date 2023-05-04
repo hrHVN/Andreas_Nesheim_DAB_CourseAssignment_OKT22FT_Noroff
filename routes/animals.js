@@ -1,8 +1,21 @@
 var express = require('express');
 var router = express.Router();
+let db = require('../models');
+// console.log(db);
 
-router.get('/', async function (req, res, next) {
-  // const animals = await animalService.getAll();
+router.get('/', async function (req, res, next) {  
+  db.animals.findAll()
+  .then((data) => {
+    let animals = data;
+    res.render('animals', { user: {
+      role: 'admin',
+      name: 'developer'
+    }, animals: animals });
+  })
+  .catch((err) => {
+    res.render('error', {error: {message: err}})
+  });
+  
   let animals =  [
     {
       "Id": 1,
@@ -123,8 +136,6 @@ router.get('/', async function (req, res, next) {
     }
    ]
 
-  res.render('animals', { user: null, animals: animals });
 });
 
 module.exports = router;
-

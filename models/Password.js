@@ -1,17 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
     const Password = sequelize.define('passwords', {
         id: {
-            type: Sequalize.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
         password: {
-            type: Sequalize.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         }
-    },
-        {
-            timeStamps: false
-        });
+    });
+
+    return Password;
 }

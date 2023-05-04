@@ -1,17 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
     const Species = sequelize.define('species', {
         id: {
-            type: Sequalize.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
         name: {
-            type: Sequalize.STRING,
+            type: DataTypes.STRING,
             allowNull: false
         }
-    },
-        {
-            timeStamps: false
-        });
+    });
+    return Species;
 }
