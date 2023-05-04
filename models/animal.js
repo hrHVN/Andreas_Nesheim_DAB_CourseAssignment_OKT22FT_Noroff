@@ -1,12 +1,16 @@
-module.exports = (sequelize, DataType) => sequelize.define('password', {
+module.exports = (sequelize, DataType) => sequelize.define('animals', {
     id: {
         type: DataType.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    password: {
+    name: {
         type: DataType.STRING,
+        allowNull: false
+    },
+    birthday:{
+        type: DataType.DATE,
         allowNull: false
     }
 });

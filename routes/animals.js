@@ -1,22 +1,9 @@
 var express = require('express');
 var router = express.Router();
-let db = require('../models');
-// console.log(db);
 
-router.get('/', async function (req, res, next) {  
-  db.animals.findAll()
-  .then((data) => {
-    let animals = data;
-    res.render('animals', { user: {
-      role: 'admin',
-      name: 'developer'
-    }, animals: animals });
-  })
-  .catch((err) => {
-    res.render('error', {error: {message: err}})
-  });
-  
-  let animals =  [
+
+router.get('/', async function (req, res, next) {
+  let animals = [
     {
       "Id": 1,
       "Name": "Coco",
@@ -101,7 +88,7 @@ router.get('/', async function (req, res, next) {
     {
       "Id": 10,
       "Name": "Toothless",
-      "Species": "Corn snake ",
+      "Species": "Corn snake",
       "Birthday": "2017-02-12",
       "Temperament": "scared",
       "Size": "medium",
@@ -134,8 +121,13 @@ router.get('/', async function (req, res, next) {
       "Size": "large",
       "Adopted": false
     }
-   ]
-
+  ]
+  res.render('animals', {
+    user: {
+      role: 'admin',
+      name: 'developer'
+    }, animals: animals
+  });
 });
 
 module.exports = router;

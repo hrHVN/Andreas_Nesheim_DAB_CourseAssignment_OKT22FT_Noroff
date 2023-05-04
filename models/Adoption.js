@@ -1,17 +1,8 @@
-module.exports = (sequelize, DataTypes) => {
-    const Adoption = sequelize.define('adoptions', {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-            allowNull: false
-        }
-    });
-
-    Adoption.associate = function (models) {
-        Adoption.hasOne(models.Users, { foreignKey: 'user' });
-        Adoption.hasOne(models.Animals, { foreignKey: 'animal' });
-    };
-
-    return Adoption;
-}
+module.exports = (sequelize, DataType) => sequelize.define('adoptions', {
+    id: {
+        type: DataType.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    }
+});

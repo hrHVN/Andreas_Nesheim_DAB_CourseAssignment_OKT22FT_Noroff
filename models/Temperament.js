@@ -1,15 +1,13 @@
-module.exports = (sequelize, DataTypes) => {
-    const Temperament = sequelize.define('temperament', {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-            allowNull: false
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false
-        }
-    });
-    return Temperament;
-}
+module.exports = (sequelize, DataType) => sequelize.define('temperaments', {
+    id: {
+        type: DataType.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
+    },
+    name: {
+        type: DataType.STRING,
+        allowNull: false,
+        unique: true
+    }
+});

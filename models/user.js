@@ -1,12 +1,17 @@
-module.exports = (sequelize, DataType) => sequelize.define('password', {
+module.exports = (sequelize, DataType) => sequelize.define('user', {
     id: {
         type: DataType.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true
     },
-    password: {
+    name: {
         type: DataType.STRING,
         allowNull: false
+    },
+    username:{
+        type: DataType.STRING,
+        allowNull: false,
+        unique: true
     }
 });
