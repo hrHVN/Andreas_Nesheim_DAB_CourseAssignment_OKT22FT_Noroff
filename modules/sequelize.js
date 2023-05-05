@@ -10,8 +10,6 @@ const AnimalModel = require('../models/animal');
 const SizeModel = require('../models/size');
 const SpeciesModel = require('../models/specie');
 const TemperamentModel = require('../models/temperament');
-const AdoptionModel = require('../models/adoption');
-const specie = require('../models/specie');
 
 const sequelize = new Sequelize(
   process.env.DB_DB,
@@ -39,27 +37,27 @@ const Animal = AnimalModel(sequelize, Sequelize);
 const Size = SizeModel(sequelize, Sequelize);
 const Species = SpeciesModel(sequelize, Sequelize);
 const Temperament = TemperamentModel(sequelize, Sequelize);
-const Adoption = AdoptionModel(sequelize, Sequelize);
 
-// Password.hasOne(User);
-User.belongsTo(Password);
-User.hasMany(Animal);
+/**
+ * Relationships
+ */
+User.hasMany(Animal);        // one User -> many Animal
+Password.belongsTo(User);    // one Password -> one User
+Role.hasMany(User, {});      // one Role -> Many User
 
-Role.hasMany(User);
+Species.hasMany(Animal);     // one Species -> Many Animal
+Temperament.hasMany(Animal)  // one Temp -> Many Animal
+Size.hasMany(Animal)         // one Sze -> Many Animal
 
-Animal.belongsTo(User, { through: 'Adoption' });
-Animal.hasOne(Species);
-Animal.hasMany(Temperament)
-Animal.hasOne(Size);
-
-Species.belongsToMany(Animal, { through: 'Aanimalspice' });
-Temperament.belongsToMany(Animal, { through: 'animalTemper' });
-Size.belongsToMany(Animal, { through: 'animalSize' });
+Animal.belongsTo(Species);   // one Role -> Many User
+Animal.belongsToMany(Temperament, { through: 'animalTempers'}); // one Role -> Many User
+Animal.belongsTo(Size);       // one Role -> Many User
+Animal.belongsTo(User, { through: 'adoptions'});       // one Role -> Many User
 
 
 sequelize.sync({
-  // force: false,
-  // alter: false
+  // force: true,
+  // alter: true
 })
 
-module.exports = { sequelize, User, Role, Password, Animal, Size, Species, Temperament, Adoption };
+module.exports = { sequelize, User, Role, Password, Animal, Size, Species, Temperament };

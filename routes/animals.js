@@ -1,8 +1,32 @@
 var express = require('express');
 var router = express.Router();
+const { Animal, Temperament, Species, Size, User } = require('../modules/sequelize');
 
-
-router.get('/', async function (req, res, next) {
+router.get('/', async function (req, res) {
+  Animal.findAll({
+    attributes: ['id', 'name', 'birthday'],
+    include: [
+      { model: Size, as: 'size', attributes: ['name'] },
+      { model: Species, as: 'species', attributes: ['name'] },
+      { model: Temperament, attributes: ['name'] },
+      { model: User, attributes: ['id'] }
+    ],
+  })
+    .then(data => {
+      const today = new Date();
+      data.forEach(element => {
+        let md = JSON.stringify(element.birthday).slice(1, 11).split(/[- :]/);;
+        let age = new Date(Date.UTC(md[0], md[1], md[2]));
+        element.age = today.getFullYear() - age.getFullYear();
+        element.Birthday = `${age.getDate()}/${age.getMonth()}/${age.getFullYear()}`;
+      });
+      // res.json(data);
+      res.render('animals', {
+        user: null,
+        animals: data
+      });
+    })
+    .catch(err => console.log(err));
   let animals = [
     {
       "Id": 1,
@@ -122,12 +146,8 @@ router.get('/', async function (req, res, next) {
       "Adopted": false
     }
   ]
-  res.render('animals', {
-    user: {
-      role: 'admin',
-      name: 'developer'
-    }, animals: animals
-  });
 });
+
+router.post('/')
 
 module.exports = router;

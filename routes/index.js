@@ -36,7 +36,18 @@ passport.deserializeUser(function (user, cb) {
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express', user: user || null });
+  User.findAll({
+    attributes: ['name', 'username'],
+    // include: [
+    //   { model: Password , attributes: ['password']},
+    //   { model: Role }
+    // ]
+  })
+    .then(data => {
+    res.json(data)  
+    })
+    .catch(err => res.json(err));
+  // res.render('index', { title: 'DAB - Adopt Animal', user: null });
 });
 
 /*
@@ -44,8 +55,8 @@ router.get('/', function (req, res, next) {
  */
 
 router.get('/login', function (req, res, next) {
-  // User.findAll().then( data => res.json(data)).catch(err => res.redirect('/'));
-  res.render('login', { title: 'Express', user: user || null });
+
+  // res.render('login', { title: 'Express', user: null });
 });
 
 router.post('/login/password', passport.authenticate('local', {

@@ -34,32 +34,37 @@
               <%=animal.name%>
             </span>
             <span class="col py-1 bg-light">
-              <%=animal.species%>
+              <%=animal.species.name%>
             </span>
             <span class="col py-1 bg-light">
-              <%=animal.birthday%>
+              <%=animal.Birthday%>
             </span>
             <span class="col py-1 bg-light">
-              <%=animal.temperament%>
+              <% animal.temperaments.forEach(element => { %>
+               <%= element.name %>
+              <% }) %>
             </span>
             <span class="col py-1 bg-light">
-              <%=animal.size%>
+              <%=animal.size.name%>
             </span>
             <span class="col py-1 bg-light">
-              to calculate from database
-              <%=animal.age%>
+              <%=animal.age%> Years old
             </span>
             <span class="col py-1 bg-light">
-              <%=animal.adopted%>
+              <% if (animal.user.id === 1) { %>
+               Ready for adoption
+              <% } else { %>
+                Adopted
+                <% } %>
             </span>
             <% if (user) { %>
             <span class="col py-1 bg-light text-center">
-              <button class="btn-sm btn-warning" onclick="adoptAnimal(<%=animal.Id%>)">Adopt</button>
+              <button class="btn-sm btn-warning" onclick="adoptAnimal(<%=animal.id%>)">Adopt</button>
               <% if (user.role == 'admin') { %>
-                <button class="btn-sm btn-danger" onclick="deleteAnimal(<%=animal.Id%>)">Cancel Adoption</button>
+                <button class="btn-sm btn-danger" onclick="deleteAnimal(<%=animal.id%>)">Cancel Adoption</button>
             <% } %>
-            </span>
-            <% } %>
+          </span>
+          <% } %>
           </div>
           <% }); %>
             <hr>

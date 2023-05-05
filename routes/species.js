@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', async function (req, res, next) {
-    if (req.body.user.role != 'admin') {
-        res.redirect('/login');
-    }
+    // if (!req.body.user) {
+    //     res.redirect('/login');
+    // }
     species = [
         {
             Id: 1,
