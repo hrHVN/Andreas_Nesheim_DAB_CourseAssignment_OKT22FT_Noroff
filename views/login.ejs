@@ -20,7 +20,8 @@
 			<form action="/logout" method="post">
 				<button class="logout" type="submit">Sign out</button>
 			</form>
-			<%}%>
+			<% } else { %>
+			 
 				<div id="login-form">
 					<form action="/login/password" method="post">
 						<section>
@@ -36,7 +37,7 @@
 					<hr>
 					<p class="help">Don't have an account? <a href="/signup">Sign up</a></p>
 				</div>
-
+				<%}%>
 				<footer class="info">
 					<p>Created by <a href="https://www.noroff.no/en/">Noroff</a></p>
 					<p>Part of Back-end Development Program at Noroff</p>

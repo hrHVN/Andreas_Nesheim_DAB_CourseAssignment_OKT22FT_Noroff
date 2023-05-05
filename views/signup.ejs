@@ -11,6 +11,14 @@
 </head>
 
 <body>
+	<% if(user){%>
+		<p>You are currently logged in as the <b>
+				<%=user.username%>
+			</b></p>
+		<form action="/logout" method="post">
+			<button class="logout" type="submit">Sign out</button>
+		</form>
+		<% } else { %>
 	<section class="prompt">
 		<h3>Animal Adoption</h3>
 		<h1>Sign up</h1>
@@ -36,6 +44,7 @@
 		<hr>
 		<p class="help">Already have an account? <a href="/login">Sign in</a></p>
 	</section>
+	<%}%>
 	<footer class="info">
 		<p>Created by <a href="https://www.noroff.no/en/">Noroff</a></p>
 		<p>Part of Back-end Developemnt Program at Noroff</p>

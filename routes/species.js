@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', async function (req, res, next) {
+    if (req.body.user.role != 'admin') {
+        res.redirect('/login');
+    }
     species = [
         {
             Id: 1,
@@ -16,6 +19,9 @@ router.get('/', async function (req, res, next) {
 })
 
 router.post('/update', async function (req,res,next){
+    if (req.body.user.role != 'admin') {
+        res.redirect('/login');
+    }
     res.render("index",{user: null})
 })
 

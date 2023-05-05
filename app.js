@@ -3,7 +3,9 @@ var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var passport = require('passport');
+var session = require('express-session');
+require('dotenv').config();
 /*
   Routers
 */
@@ -13,6 +15,18 @@ var speciesRouter = require('./routes/species');
 var temperamentRouter = require('./routes/temperament');
 
 var app = express();
+
+// Session
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: process.env.SESSION_KEY,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+  }
+}));
+app.use(passport.authenticate('session'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
