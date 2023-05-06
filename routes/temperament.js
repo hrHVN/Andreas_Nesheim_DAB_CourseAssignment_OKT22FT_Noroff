@@ -2,11 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', async function (req, res, next) {
-    if (req.body.user.role != 'admin') {
-        res.redirect('/login');
-    }
+    if (req.user.role != 'admin') res.redirect('/');
 
-    temperament = [
+        temperament = [
         {
             Id: 1,
             Name: "Calm"
@@ -16,14 +14,13 @@ router.get('/', async function (req, res, next) {
             Name: "Scared"
         }
     ]
-    res.render("temperament", { user: null, temperament: temperament })
+    res.render("temperament", { user: req.user, temperament: temperament })
 })
 
 router.post('/update', async function (req, res, next) {
-    if (req.body.user.role != 'admin') {
-        res.redirect('/login');
-    }
-    res.render("index", { user: null })
+    if (req.user.role != 'admin') res.redirect('/');
+    
+    res.render("index", { user: req.user })
 })
 
 module.exports = router;

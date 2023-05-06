@@ -22,7 +22,7 @@ router.get('/', async function (req, res) {
       });
       // res.json(data);
       res.render('animals', {
-        user: null,
+        user: req.user,
         animals: data
       });
     })
