@@ -5,6 +5,40 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 const { User, Password, Role } = require('../modules/sequelize');
 
+
+/* GET home page. */
+router.get('/', function (req, res, next) {
+  if (!req.user) res.render('./index', { title: 'DAB - Adopt Animal', user: null });
+  res.render('index', { title: 'DAB - Adopt Animal', user: req.user });
+});
+
+router.get('/api', async (req, res) => {
+  let username = 'a5';
+  let firstname = 'a';
+  let lastname = 'a';
+  let password = 'a';
+
+  await Role.findOne({ where: { name: 'user' } }).then((r) => {
+    console.log(r.id)
+    User.create({ name: `${firstname} ${lastname}`, username: username, roleId: r.id })
+      .then((u) => {
+        Password.create({ password: password, userId: u.id })
+        res.json(u)
+      })
+      .catch(err => {
+        res.json(err.errors)
+      });
+  })
+
+  // const data = {
+  //   name: _user.name,
+  //   username: _user.username,
+  //   password: _password.password,
+  //   role: _role.name
+  // };
+  // res.json({_role, _user, _password})
+})
+
 /**
  * PASSPORTJS
  */
@@ -40,33 +74,8 @@ passport.deserializeUser(function (user, cb) {
   });
 });
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  if (!req.user) res.render('./index', { title: 'DAB - Adopt Animal', user: null });
-  res.render('index', { title: 'DAB - Adopt Animal', user: req.user  });
-});
-
-router.get('/api', async (req, res) => {
-  let username = 'admin_db'
-  let _user = await User.findOne({ where: { username: username } }).then(data => { return data; });
-  let _password = await Password.findOne({ where: { userId: _user.id }, attributes: ['password'] }).then(data => { return data; });
-  let _role = await Role.findOne({ where: { id: _user.roleId }, attributes: ['name'] }).then(data => { return data; });
-
-  const data = {
-    name: _user.name,
-    username: _user.username,
-    password: _password.password,
-    role: _role.name
-  };
-  res.json(data)
-})
-
-/*
- *  Login page
- */
-
+//  Login page
 router.get('/login', function (req, res) {
-  
   res.render('login', { title: 'Express', user: req.user });
 });
 
@@ -75,18 +84,26 @@ router.post('/login/password', passport.authenticate('local', {
   failureRedirect: '/login'
 }));
 
-/*
- * Signup Page
- */
-
+// Signup Page
 router.get('/signup', function (req, res, next) {
-  res.render('signup', { title: 'Express', user: req.user  });
+  res.render('signup', { title: 'Express', user: req.user });
 });
 
-/*
- * Logout Page
- */
+router.post('/signup', function (req, res, next) {
+  Role.findOne({ where: { name: 'user' } })
+    .then((r) => {
+      User.create({ name: `${req.body.firstname} ${req.body.lastname}`, username: req.body.username, roleId: r.id })
+        .then(async (u) => {
+          Password.create({ password: req.body.password, userId: u.id })
+        })
+        .catch(err => {
+          res.json(err.errors)
+        });
+      res.redirect('/login');
+    });
+});
 
+// Logout Page
 router.post('/logout', function (req, res, next) {
   req.logout(function (err) {
     if (err) { return next(err); }

@@ -148,6 +148,25 @@ router.get('/', async function (req, res) {
   ]
 });
 
-router.post('/')
+router.post('/:id', async function (req, res) {
+  // adopt animal
+  console.log('req.id: ', req.params.id)
 
+  Animal.update({ userId: req.user.id }, { where: { id: req.params.id } })
+    .then(a => {
+      console.log('update: ', a)
+      res.redirect('/animals')
+    })
+    .catch(err => console.error('err: ', err));
+});
+
+router.post('/:id', async function (req, res) {
+  // cancel adoption
+  Animal.update({ userId: 1 }, { where: { id: req.params.id } })
+    .then(a => {
+      console.log('update: ', a)
+      res.redirect('/animals')
+    })
+    .catch(err => console.error('err: ', err));
+});
 module.exports = router;
