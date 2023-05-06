@@ -58,13 +58,15 @@
                 <% } %>
             </span>
             <% if (user) { %>
-            <span class="col py-1 bg-light text-center">
-              <button class="btn-sm btn-warning" onclick="adoptAnimal(<%=animal.id%>)">Adopt</button>
+              <span class="col py-1 bg-light text-center">
+              <% if (animal.user.id === 1 || animal.user.id == null) { %>
+                <button class="btn-sm btn-warning" onclick="adoptAnimal(<%=animal.id%>)">Adopt</button>
+              <% } %>
               <% if (user.role == 'admin') { %>
                 <button class="btn-sm btn-danger" onclick="deleteAnimal(<%=animal.id%>)">Cancel Adoption</button>
+              <% } %>
+              </span>
             <% } %>
-          </span>
-          <% } %>
           </div>
           <% }); %>
             <hr>

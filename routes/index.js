@@ -13,30 +13,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/api', async (req, res) => {
-  let username = 'a5';
-  let firstname = 'a';
-  let lastname = 'a';
-  let password = 'a';
-
-  await Role.findOne({ where: { name: 'user' } }).then((r) => {
-    console.log(r.id)
-    User.create({ name: `${firstname} ${lastname}`, username: username, roleId: r.id })
-      .then((u) => {
-        Password.create({ password: password, userId: u.id })
-        res.json(u)
-      })
-      .catch(err => {
-        res.json(err.errors)
-      });
-  })
-
-  // const data = {
-  //   name: _user.name,
-  //   username: _user.username,
-  //   password: _password.password,
-  //   role: _role.name
-  // };
-  // res.json({_role, _user, _password})
+  let data = {};
+  res.json(data)
 })
 
 /**

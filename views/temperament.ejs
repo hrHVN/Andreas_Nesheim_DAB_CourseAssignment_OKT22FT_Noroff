@@ -22,14 +22,14 @@
           <% temperament.forEach(function(temp) { %>
             <div class="row px-3 py-1 w-100">
               <span class="col py-1 bg-light">
-                <%=temp.Id%>
+                <%=temp.id%>
               </span>
               <span class="col py-1 bg-light">
-                <%=temp.Name%>
+                <%=temp.name%>
               </span>
               <span class="col py-1 bg-light text-center">
-                <button class="btn-sm btn-warning" onclick="updateTemperament(<%=temp.Id%>)">Update temperament</button>
-                <button class="btn-sm btn-danger" onclick="deleteTemperament(<%=temp.Id%>)">Delete temperament</button>
+                <button class="btn-sm btn-warning" onclick="updateTemperament(<%=temp.id%>)">Update temperament</button>
+                <button class="btn-sm btn-danger" onclick="deleteTemperament(<%=temp.id%>)">Delete temperament</button>
               </span>
             </div>
             <% }); %>
@@ -37,9 +37,9 @@
             <div class="row">
               <div class="col-4"></div>
               <div class="col-4 text-center mt-2">
-                <form action="/temperament/add" method="POST">
-                  <button class="btn btn-success" id="btn-add-animal" >Add New Temperament</button>
-                </form>
+              
+                  <button class="btn btn-success" id="btn-add-animal" onclick="updateTemperament(0)" >Add New Temperament</button>
+                
               </div>
               <div class="col-4"></div>
             </div>

@@ -42,7 +42,6 @@ app.use('/', indexRouter);
 app.use('/animals', animalsRouter);
 app.use('/species', speciesRouter);
 app.use('/temperament', temperamentRouter);
-require('dotenv').config();
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

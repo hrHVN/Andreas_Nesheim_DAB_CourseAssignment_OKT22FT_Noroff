@@ -1,6 +1,10 @@
 function adoptAnimal(id) {
     fetch(`${window.location.origin}/animals/${id}`, {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     })
         .then((res) => window.location.href = '/animals')
         .catch((err) => {
@@ -10,7 +14,11 @@ function adoptAnimal(id) {
 
 function deleteAnimal(id) {
     fetch(`${window.location.origin}/animals/${id}`, {
-        method: 'post'
+        method: 'post',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     })
         .then(res => window.location.href = '/animals')
         .catch((err) => {
@@ -19,11 +27,19 @@ function deleteAnimal(id) {
 }
 
 function updateSpecies(id) {
-    newSpecies = prompt("Update species")
-    fetch(`${window.location.origin}/species/${id}`, {
-        method: 'POST'
+    let newSpecies = prompt("Update species")
+    if (!id) id = `new`;
+    fetch(`${window.location.origin}/species/update/${id}`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: newSpecies
+        })
     })
-        .then(res => window.location.href = '/species')
+        .then(() => window.location.href = '/species')
         .catch((err) => {
             console.log(err)
         });
@@ -31,7 +47,11 @@ function updateSpecies(id) {
 
 function deleteSpecies(id) {
     fetch(`${window.location.origin}/species/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     })
         .then(res => window.location.href = '/species')
         .catch((err) => {
@@ -40,9 +60,16 @@ function deleteSpecies(id) {
 }
 
 function updateTemperament(id) {
-    newTemperament = prompt("Update temperament")
-    fetch(`${window.location.origin}/temperament/${id}`, {
-        method: 'POST'
+    let newTemperament = prompt("Update temperament");
+    if (!id) id = `new`;
+
+    fetch(`${window.location.origin}/temperament/update/${id}`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: newTemperament })
     })
         .then(res => window.location.href = '/temperament')
         .catch((err) => {
@@ -52,7 +79,11 @@ function updateTemperament(id) {
 
 function deleteTemperament(id) {
     fetch(`${window.location.origin}/temperament/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     })
         .then(res => window.location.href = '/temperament')
         .catch((err) => {
