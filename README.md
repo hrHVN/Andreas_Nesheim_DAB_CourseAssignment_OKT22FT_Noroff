@@ -20,8 +20,7 @@ DB_DB = [DATABASE_NAME]
 v18.13.0
 
 # DATABASE
-The database is created in app.js between the lines 50-75.
-in sumary 'CREATE DATABASE ${process.env.DB_DB}'
+CREATE DATABASE adoptiondb;
 
 # DATAINSERTS
 CREATE TABLE IF NOT EXISTS species 
@@ -58,4 +57,58 @@ FOREIGN KEY (animal) REFERENCES animals(id),FOREIGN KEY (user) REFERENCES users(
 CREATE USER 'dabcaowner'@'%' IDENTIFIED BY 'dabca1234';
 GRANT ALL ON *.* TO "dabcaowner"@"%";
 
-# DATABASEQUERIES
+## DATABASEQUERIES
+# Return the most popular animal name.
+SELECT Name FROM animals GROUP BY Name ORDER BY COUNT(*) DESC LIMIT 1;
+
+# Return a list of animals that have been adopted, and the name of the user that adopted them. 
+SELECT animals.name, users.name FROM animals LEFT JOIN users ON animals.userId = users.id;
+
+# Return a list of all the animals, sorted by age from youngest to oldest. 
+SELECT name, birthday, TIMESTAMPDIFF(YEAR, birthday, CURDATE()) AS age_in_years FROM animals ORDER BY birthday ASC;
+
+# Return all the animals born between 31 December 2017 and 31 December 2020. 
+SELECT name, birthday FROM animals WHERE birthday BETWEEN '2017-12-31' AND '2020-12-31';
+    
+# Return the number of animals per size (return each size and the number). 
+SELECT  sizes.name, COUNT(*) FROM sizes, animals WHERE sizes.id = animals.sizeId GROUP BY sizes.name;
+
+# CREATE a trigger to implement the following feature 
+# - Whenever a new animal of Species type “Lizard” is added to the database, the last created user will automatically adopt that animal.
+
+DELIMITER $$
+create trigger auto_adopt_lizzards
+	before update on animals for each row
+begin
+	call getLizzard();
+    call getLastUser();
+    select max(id) from users;
+	begin if new.speciesId = @lizzard then
+		set new.userId = @looser;
+    end if;
+end;
+DELIMITER;
+
+DELIMITER $$
+create procedure getLizzard(
+	out lizzard int
+)
+begin
+    select id 
+    into lizzard 
+    from species 
+    where name = 'lizzard';
+end;
+DELIMITER;
+
+DELIMITER $$
+create procedure getLastUser( 
+out looser int
+)
+begin
+	select max(id) 
+    into looser
+    from users;
+end;
+
+DELIMITER;
