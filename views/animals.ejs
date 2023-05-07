@@ -51,7 +51,7 @@
               <%=animal.age%> Years old
             </span>
             <span class="col py-1 bg-light">
-              <% if (animal.user.id === 1) { %>
+              <% if (animal.user.id === 1 ||animal.user.id == null ) { %>
                Ready for adoption
               <% } else { %>
                 Adopted
