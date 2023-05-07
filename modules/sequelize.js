@@ -41,16 +41,30 @@ const Temperament = TemperamentModel(sequelize, Sequelize);
 /**
  * Relationships
  */
-User.hasMany(Animal);        // one User -> many Animal
-Password.belongsTo(User);    // one Password -> one User
-Role.hasMany(User, {});      // one Role -> Many User
+User.hasMany(Animal, {
+  onDelete: 'RESTRICT'
+});        // one User -> many Animal
+Password.belongsTo(User, {
+  onDelete: 'RESTRICT'
+});    // one Password -> one User
+Role.hasMany(User, {
+  onDelete: 'RESTRICT'
+});      // one Role -> Many User
 
-Species.hasMany(Animal);     // one Species -> Many Animal
-Temperament.hasMany(Animal)  // one Temp -> Many Animal
-Size.hasMany(Animal)         // one Sze -> Many Animal
+Species.hasMany(Animal, {
+  onDelete: 'RESTRICT'
+});     // one Species -> Many Animal
+Temperament.hasMany(Animal, {
+  onDelete: 'RESTRICT'
+})  // one Temp -> Many Animal
+Size.hasMany(Animal, {
+  onDelete: 'RESTRICT'
+})         // one Sze -> Many Animal
 
 Animal.belongsTo(Species);   // one Role -> Many User
-Animal.belongsToMany(Temperament, { through: 'animalTempers'}); // one Role -> Many User
+Animal.belongsToMany(Temperament, { 
+  through: 'animalTempers'
+}); // one Role -> Many User
 Animal.belongsTo(Size);       // one Role -> Many User
 Animal.belongsTo(User, { through: 'adoptions'});       // one Role -> Many User
 
