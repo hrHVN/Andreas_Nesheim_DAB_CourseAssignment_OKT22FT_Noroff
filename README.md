@@ -53,6 +53,36 @@ CREATE TABLE IF NOT EXISTS adoptions
 (id INT AUTO_INCREMENT,animal VARCHAR(38),user VARCHAR(38),PRIMARY KEY (id, animal),
 FOREIGN KEY (animal) REFERENCES animals(id),FOREIGN KEY (user) REFERENCES users(id));
 
+INSERT INTO sizes (name) VALUES 
+("small"),("medium"),("large");
+
+INSERT INTO temperaments (name) VALUES 
+("calm"), ("scared"), ("energetic"), ("happy"), ("lazy");
+
+INSERT INTO roles (name) VALUES 
+("admin"), ("member");
+
+INSERT INTO species (name) VALUES 
+("Dwarf Hamster"), ("Tedy bear hamster"), ("Jack-Russel"), 
+("Budgy"), ("Tortouse"), ("Gold Fish"), 
+('Lizzard'), ('Bearder Dragon'), ('Parrot'), 
+('Corn snake');
+
+INSERT INTO users (name, username, roleId) VALUES 
+("System admin", "Admin", 1);
+
+INSERT INTO passwords (password, userId) VALUES 
+("admin1234",1);
+
+INSERT INTO animals (name, birthday, speciesId, sizeId) VALUES
+("Coco","2020-02-12", 1, 1), ("Ted", "2021-02-12", 2, 1), ("Coco", "2020-02-12", 3, 2)
+, ("Everrest", "2019-02-12", 4,1), ("Rocko", "2020-02-12", 5,2), ("Goldy", "2023-02-12", 6, 1), ("Lizzy", "2020-02-12", 7, 2), ("Goga", "2018-02-12", 8, 3), ("Tweet Tweet", "2020-02-12", 9 ,3), ("Toothless", "2017-02-12", 10, 2), ("Sophie",  "2020-02-12", 1, 1), ("Teddy", "2021-02-12", 2, 1), ("Roger", "2020-02-18", 9, 3);
+
+INSERT INTO animalTempers (animalId, temperamentId) VALUES 
+(1,1), (1,2),(2,1), (2,2),(3,3), (4,1), (4,4),(5,1), (5,5),
+(6,1), (7,1), (7,5),(8,1), (8,5), (8,2),(9,1), (9,4),
+(10,2),(11,1), (11,2),(12,1), (12,2), (13,1),(13,4);
+
 # DATABASEACCESS
 CREATE USER 'dabcaowner'@'%' IDENTIFIED BY 'dabca1234';
 GRANT ALL ON *.* TO "dabcaowner"@"%";
