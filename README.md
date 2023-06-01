@@ -1,14 +1,17 @@
 # DAB - Course Assignment 1
-# Application Installation and Usage Instructions
+This repository is the Course Assignment for the subject "Databases" at Noroff Vocational School.
+This file was required to have som "instructions" and all MySQL queries was to be written here. The project it self utelize Sequelize, an ORM-system for Javascript servers.
 
+Furthermore the Project has an "MVC" layout, where Controller is known as Roues.
 
-# Environment Variables
+## Application Installation and Usage Instructions
+## Environment Variables
 DB_HOST = [URI_to_Databse]
 DB_USER = [USER]
 DB_PASSWORD = [PASSWORD]
 DB_DB = [DATABASE_NAME]
 
-# Additional Libraries/Packages
+## Additional Libraries/Packages
 "mysql": "^2.18.1"
 "nodemon": "^2.0.22"
 "passport": "^0.6.0"
@@ -16,13 +19,13 @@ DB_DB = [DATABASE_NAME]
 "sequelize": "^6.31.1"
 "dotenv": "^16.0.3"
 
-# NodeJS Version Used
+## NodeJS Version Used
 v18.13.0
 
-# DATABASE
+## DATABASE
 CREATE DATABASE adoptiondb;
 
-# DATAINSERTS
+## DATAINSERTS
 CREATE TABLE IF NOT EXISTS species 
  (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(100) NOT NULL);
 
@@ -83,28 +86,28 @@ INSERT INTO animalTempers (animalId, temperamentId) VALUES
 (6,1), (7,1), (7,5),(8,1), (8,5), (8,2),(9,1), (9,4),
 (10,2),(11,1), (11,2),(12,1), (12,2), (13,1),(13,4);
 
-# DATABASEACCESS
+## DATABASEACCESS
 CREATE USER 'dabcaowner'@'%' IDENTIFIED BY 'dabca1234';
 GRANT ALL ON *.* TO "dabcaowner"@"%";
 
 ## DATABASEQUERIES
-# Return the most popular animal name.
+### Return the most popular animal name.
 SELECT Name FROM animals GROUP BY Name ORDER BY COUNT(*) DESC LIMIT 1;
 
-# Return a list of animals that have been adopted, and the name of the user that adopted them. 
+### Return a list of animals that have been adopted, and the name of the user that adopted them. 
 SELECT animals.name, users.name FROM animals LEFT JOIN users ON animals.userId = users.id;
 
-# Return a list of all the animals, sorted by age from youngest to oldest. 
+### Return a list of all the animals, sorted by age from youngest to oldest. 
 SELECT name, birthday, TIMESTAMPDIFF(YEAR, birthday, CURDATE()) AS age_in_years FROM animals ORDER BY birthday ASC;
 
-# Return all the animals born between 31 December 2017 and 31 December 2020. 
+### Return all the animals born between 31 December 2017 and 31 December 2020. 
 SELECT name, birthday FROM animals WHERE birthday BETWEEN '2017-12-31' AND '2020-12-31';
     
-# Return the number of animals per size (return each size and the number). 
+### Return the number of animals per size (return each size and the number). 
 SELECT  sizes.name, COUNT(*) FROM sizes, animals WHERE sizes.id = animals.sizeId GROUP BY sizes.name;
 
-# CREATE a trigger to implement the following feature 
-# - Whenever a new animal of Species type “Lizard” is added to the database, the last created user will automatically adopt that animal.
+### CREATE a trigger to implement the following feature 
+_- Whenever a new animal of Species type “Lizard” is added to the database, the last created user will automatically adopt that animal._
 
 DELIMITER $$
 create trigger auto_adopt_lizzards
